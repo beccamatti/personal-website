@@ -429,10 +429,10 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
   .toc a{background:#fff;border:2px solid var(--pink-200);border-radius:999px;padding:7px 14px;white-space:nowrap}
   .toc a .ic,.toc .t2{display:none}
   .toc .t1{font-size:14px}
-  .p-top,.about-grid,.lead-grid{grid-template-columns:1fr}
+  .p-top,.about-grid,.lead-grid{grid-template-columns:minmax(0,1fr)}
   .stats{display:flex;flex-wrap:wrap}
   .stats div{flex:0 1 160px}
-  .cs-cols.three{grid-template-columns:1fr}
+  .cs-cols.three{grid-template-columns:minmax(0,1fr)}
   .lead-photos{grid-auto-flow:column;justify-content:start;align-items:end}
 }
 @media (max-width:820px){
@@ -440,8 +440,10 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
   .links{order:3;width:100%;justify-content:space-between}
   .drop{position:static}
   .drop-panel{left:18px;right:18px;width:auto;top:calc(100% - 4px)}
-  .contact-grid{grid-template-columns:1fr}
-  .cs-cols{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:minmax(0,1fr)}
+  .cs-cols{grid-template-columns:minmax(0,1fr)}
+  /* nav wraps to two rows here, so anchored sections need more room below it */
+  section,.project,.skills{scroll-margin-top:112px}
 }
 @media (max-width:640px){
   body{font-size:16px}
