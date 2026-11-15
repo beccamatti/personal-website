@@ -405,6 +405,11 @@ dialog{border:0;padding:0;background:transparent;max-width:min(1100px,94vw);max-
 dialog::backdrop{background:rgba(59,34,25,.72)}
 .lb{background:#fff;border:2px solid var(--choc);border-radius:20px;padding:16px;display:grid;gap:10px;max-height:92vh}
 .lb img{max-height:calc(92vh - 120px);width:auto;max-width:100%;margin:0 auto;border-radius:10px}
+.lb-load{display:none;width:min(440px,80vw);min-height:220px;grid-template-columns:100%;align-content:center;gap:4px;margin:0 auto}
+.lb.is-loading .lb-load{display:grid}
+.lb.is-loading #lb-img{display:none}
+.lb-load .loading{width:100%}
+.lb-load .load-label{text-align:center}
 .lb-foot{display:flex;align-items:center;gap:14px}
 .lb-foot p{font-size:14.5px;color:var(--choc-soft);max-width:80ch;flex:1}
 .lb-count{font:500 12.5px var(--mono);color:var(--choc-soft);white-space:nowrap}
@@ -1132,7 +1137,7 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
             <div><span class="lbl">Email</span><span class="val" id="email">r2matti@uwaterloo.ca</span></div>
             <div class="c-actions">
               <button class="gel sm" type="button" id="copy-email"><span>Copy</span></button>
-              <a class="gel sm chrome" href="mailto:r2matti@uwaterloo.ca"><span>Email me</span></a>
+              <a class="gel sm chrome" id="email-me" href="mailto:r2matti@uwaterloo.ca"><span>Email me</span></a>
             </div>
           </div>
           <div class="c-row">
@@ -1276,6 +1281,7 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
 
 <dialog id="lightbox" aria-label="Enlarged image">
   <div class="lb">
+    <div class="lb-load" role="status" aria-live="polite"><div class="loading" aria-hidden="true"><span></span></div><p class="load-label" id="lb-load-label">Loading photo…</p></div>
     <img id="lb-img" src="" alt="">
     <div class="lb-foot">
       <p id="lb-cap"></p>
@@ -1306,7 +1312,13 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
   }
   function render(){
     var it = gallery[gi];
-    img.src = it.src; img.alt = it.alt; cap.textContent = it.cap;
+    var box = img.closest('.lb'), label = document.getElementById('lb-load-label');
+    label.textContent = 'Loading photo…';
+    box.classList.add('is-loading');
+    img.onload = function(){ box.classList.remove('is-loading'); };
+    img.onerror = function(){ label.textContent = "This photo didn't load. Try again in a moment."; };
+    img.alt = it.alt; img.src = it.src; cap.textContent = it.cap;
+    if (img.complete && img.naturalWidth) box.classList.remove('is-loading');
     var many = gallery.length > 1;
     nav.hidden = !many;
     count.textContent = many ? (gi + 1) + ' of ' + gallery.length : '';
@@ -1378,6 +1390,14 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
     var done = function(){ copyLabel.textContent = 'Copied!'; setTimeout(function(){ copyLabel.textContent = 'Copy'; }, 1800); };
     try { navigator.clipboard.writeText(text).then(done, function(){ copyLabel.textContent = 'Select to copy'; }); }
     catch (e) { copyLabel.textContent = 'Select to copy'; }
+  });
+  /* Email me: opens the mail app if there is one, and also copies the address so something always happens */
+  var mailBtn = document.getElementById('email-me');
+  var mailLabel = mailBtn.querySelector('span');
+  mailBtn.addEventListener('click', function(){
+    var text = document.getElementById('email').textContent;
+    var done = function(){ mailLabel.textContent = 'Address copied ♥'; setTimeout(function(){ mailLabel.textContent = 'Email me'; }, 2400); };
+    try { navigator.clipboard.writeText(text).then(done, function(){}); } catch (e) {}
   });
 
   /* ---------- Hababa only talks when clicked ---------- */
