@@ -412,8 +412,10 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
 .lb-nav[hidden]{display:none}
 .lb-close{
   position:absolute;top:-14px;right:-14px;width:42px;height:42px;border-radius:50%;cursor:pointer;
-  border:2px solid var(--choc);background:linear-gradient(180deg,#FFD4E8,#FF86BE);font-size:22px;font-weight:800;line-height:1;
+  border:2px solid var(--choc);background:linear-gradient(180deg,#FFD4E8,#FF86BE);padding:0;
+  display:flex;align-items:center;justify-content:center;
 }
+.lb-close svg{width:16px;height:16px;display:block;stroke:var(--choc);stroke-width:3;stroke-linecap:round;fill:none}
 
 /* ---------- Responsive ---------- */
 @media (max-width:1100px){
@@ -528,6 +530,8 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
       <div class="cta">
         <a class="gel" href="#experience"><span>See my work</span></a>
         <a class="gel chrome" href="#contact"><span>Say hi</span></a>
+        <a class="gel chrome" href="files/Rebecca_Matti_Resume.pdf" target="_blank" rel="noopener"><span>Resume</span></a>
+        <a class="gel chrome" href="files/Rebecca_Matti_Portfolio.pdf" target="_blank" rel="noopener"><span>Portfolio</span></a>
       </div>
     </div>
 
@@ -946,11 +950,21 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
           <span class="focus-pill">Process design</span>
           <h3>Capstone design project</h3>
           <p class="role">Final-year design project, University of Waterloo</p>
-          <p class="p-sum">My capstone is in progress. I'll add the full write-up here when it's done, including my Aspen Plus work.</p>
+          <p class="p-sum">Ever had a paper straw go soft halfway through your drink? My team and I are developing a biodegradable coating to help it stay firm longer. Right now, we’re designing experiments and testing how different coatings affect water absorption and wet strength. I’ll share more here as we see what works!</p>
         </div>
         <div>
           <div class="loading" role="img" aria-label="Loading bar: capstone in progress"><span></span></div>
           <p class="load-label">Loading capstone.bkp</p>
+        </div>
+      </div>
+    </article>
+    <article class="win project" id="aspen">
+      <div class="win-bar"><span class="win-hearts" aria-hidden="true"><svg class="ic"><use href="#i-heart"/></svg><svg class="ic"><use href="#i-heart"/></svg><svg class="ic"><use href="#i-heart"/></svg></span><span>aspen_plus.bkp</span><span class="win-meta">In progress</span></div>
+      <div class="win-body">
+        <div class="p-text">
+          <span class="focus-pill">Process simulation</span>
+          <h3>Haber–Bosch ammonia model in Aspen Plus</h3>
+          <p class="p-sum">I’m building an Aspen Plus model of the Haber–Bosch process, which produces ammonia from nitrogen and hydrogen. I’ve been working through how to compress the feed in stages, remove heat from the reactor, and separate the ammonia from the unreacted gases.</p>
         </div>
       </div>
     </article>
@@ -1268,7 +1282,7 @@ dialog::backdrop{background:rgba(59,34,25,.72)}
       </div>
     </div>
   </div>
-  <button class="lb-close" type="button" id="lb-close" aria-label="Close">×</button>
+  <button class="lb-close" type="button" id="lb-close" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13"/></svg></button>
 </dialog>
 
 <script>
